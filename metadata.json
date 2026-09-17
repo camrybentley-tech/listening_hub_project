@@ -1,0 +1,7 @@
+{
+  "name": "English Listening Practice Lab",
+  "description": "A modern ELT English listening practice module integrated with a multi-dimensional vocabulary database, featuring authentic listening, Word Hunt, comprehension, dictation bite, shadowing, and teacher controls.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

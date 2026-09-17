@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Listening Practice Module - 100% Offline</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding-bottom: 60px; line-height: 1.5; }
+    header { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .brand { font-size: 1.15rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 8px; }
+    .tabs { display: flex; gap: 6px; background: #f1f5f9; padding: 4px; border-radius: 12px; }
+    .tab-btn { border: none; background: transparent; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; color: #475569; cursor: pointer; }
+    .tab-btn.active { background: #fff; color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .container { max-width: 1100px; margin: 24px auto; padding: 0 20px; }
+    .card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .btn { background: var(--primary); color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+    .btn:hover { background: var(--primary-hover); }
+    .btn-secondary { background: #f1f5f9; color: #334155; }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .player-box { background: #0f172a; color: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; }
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; }
+    .badge-blue { background: #eff6ff; color: #1d4ed8; }
+    .badge-green { background: #ecfdf5; color: #047857; }
+    .badge-amber { background: #fffbeb; color: #b45309; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+    .word-btn { padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-weight: 700; font-size: 0.85rem; }
+    .word-btn.selected { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .word-btn.correct { background: #dcfce7; color: #15803d; border-color: #86efac; }
+    .word-btn.missed { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-inner">
+      <div class="brand">🎧 ELT Listening Practice Lab</div>
+      <div class="tabs">
+        <button class="tab-btn" onclick="switchTab('vocab')">VOCABULARY</button>
+        <button class="tab-btn active" onclick="switchTab('lab')">LISTENING LAB</button>
+        <button class="tab-btn" onclick="switchTab('mywords')">MY WORDS</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="root-view">
+    <!-- Populated by JavaScript for 100% offline capability -->
+  </main>
+
+  <script>
+    const VOCAB = [
+      { id: 'v1', word: 'responsibility', phonetic: '/rɪˌspɒnsəˈbɪləti/', cefr: 'B1', definition: 'The state or fact of having a duty to deal with something.', stats: { listeningRecognised: true, timesMissedListening: 0 } },
+      { id: 'v2', word: 'contribute', phonetic: '/kənˈtrɪbjuːt/', cefr: 'B1', definition: 'To give something in order to help achieve or provide something.', stats: { listeningRecognised: false, timesMissedListening: 2 } },
+      { id: 'v3', word: 'appreciate', phonetic: '/əˈpriːʃieɪt/', cefr: 'B1', definition: 'Recognize the full worth of; be grateful for.', stats: { listeningRecognised: true, timesMissedListening: 0 } },
+      { id: 'v4', word: 'chores', phonetic: '/tʃɔːz/', cefr: 'A2', definition: 'Routine tasks, especially household ones like cleaning or washing.', stats: { listeningRecognised: false, timesMissedListening: 1 } },
+      { id: 'v5', word: 'exhausted', phonetic: '/ɪɡˈzɔːstɪd/', cefr: 'B1', definition: 'Completely drained of physical or mental energy.', stats: { listeningRecognised: true, timesMissedListening: 0 } },
+      { id: 'v6', word: 'negotiate', phonetic: '/nɪˈɡəʊʃieɪt/', cefr: 'B2', definition: 'Try to reach an agreement or compromise by discussion.', stats: { listeningRecognised: false, timesMissedListening: 2 } }
+    ];
+
+    const LESSONS = [
+      {
+        id: 'lesson-1',
+        title: 'Sharing Household Chores Fairly',
+        topic: 'Family Life & Household Chores',
+        cefr: 'B1',
+        accent: 'British English',
+        duration: '2:45',
+        targetWords: ['chores', 'responsibility', 'contribute', 'appreciate'],
+        fullTranscript: "In our home, sharing chores used to cause daily arguments. My parents felt exhausted after work, while my brother and I were always on our phones. One Sunday evening, we decided that everyone should contribute fairly. When teenagers take on regular chores, they develop a genuine sense of responsibility. It also teaches young people to appreciate the hard work that keeps a family household running smoothly.",
+        options: [
+          { word: 'chores', isTarget: true },
+          { word: 'responsibility', isTarget: true },
+          { word: 'contribute', isTarget: true },
+          { word: 'appreciate', isTarget: true },
+          { word: 'traffic', isTarget: false },
+          { word: 'weather', isTarget: false }
+        ]
+      },
+      {
+        id: 'lesson-2',
+        title: 'Teenagers and Digital Distractions',
+        topic: 'Technology & Habits',
+        cefr: 'B2',
+        accent: 'American English',
+        duration: '3:15',
+        targetWords: ['exhausted', 'negotiate'],
+        fullTranscript: "Balancing screen time with high-school study requires students to negotiate clear personal boundaries. Many teenagers report feeling exhausted after endless notifications late at night.",
+        options: [
+          { word: 'exhausted', isTarget: true },
+          { word: 'negotiate', isTarget: true },
+          { word: 'chores', isTarget: false },
+          { word: 'landscape', isTarget: false }
+        ]
+      }
+    ];
+
+    let currentTab = 'lab';
+    let currentLesson = null;
+    let selectedHunt = [];
+    let huntSubmitted = false;
+
+    function speak(text, accent = 'British English') {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = accent.includes('American') ? 'en-US' : 'en-GB';
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    function switchTab(t) {
+      currentTab = t;
+      currentLesson = null;
+      document.querySelectorAll('.tab-btn').forEach((b, i) => {
+        b.classList.toggle('active', ['vocab', 'lab', 'mywords'][i] === t);
+      });
+      render();
+    }
+
+    function render() {
+      const root = document.getElementById('root-view');
+      if (currentLesson) {
+        renderLesson(root);
+      } else if (currentTab === 'lab') {
+        renderLab(root);
+      } else if (currentTab === 'vocab') {
+        renderVocab(root);
+      } else if (currentTab === 'mywords') {
+        renderMyWords(root);
+      }
+    }
+
+    function renderLab(root) {
+      let html = '<h1 style="margin-bottom:8px;">Listening Practice Lab</h1>';
+      html += '<p style="color:var(--text-muted); margin-bottom:20px;">Curated authentic listening sources for secondary and high-school students.</p>';
+      html += '<div class="grid">';
+      LESSONS.forEach(l => {
+        html += '<div class="card">';
+        html += '<span class="badge badge-blue">' + l.topic + '</span> <span class="badge badge-green">CEFR ' + l.cefr + '</span>';
+        html += '<h3 style="margin:12px 0 6px;">' + l.title + '</h3>';
+        html += '<p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:12px;">Accent: ' + l.accent + ' &middot; ' + l.duration + '</p>';
+        html += '<div style="margin-bottom:16px;"><strong>Target Vocabulary:</strong><br/>';
+        l.targetWords.forEach(w => {
+          html += '<span class="badge badge-blue" style="margin:2px;">' + w + '</span>';
+        });
+        html += '</div>';
+        html += '<button class="btn" style="width:100%; justify-content:center;" onclick="startLesson(\\'' + l.id + '\\')">▶ START LISTENING</button>';
+        html += '</div>';
+      });
+      html += '</div>';
+      root.innerHTML = html;
+    }
+
+    function startLesson(id) {
+      currentLesson = LESSONS.find(x => x.id === id);
+      selectedHunt = [];
+      huntSubmitted = false;
+      render();
+    }
+
+    function renderLesson(root) {
+      const l = currentLesson;
+      let html = '<button class="btn btn-secondary" style="margin-bottom:16px;" onclick="switchTab(\\'lab\\')">← Back to Listening Lab</button>';
+      html += '<div class="player-box">';
+      html += '<div style="display:flex; justify-content:space-between; margin-bottom:12px;">';
+      html += '<strong>' + l.title + '</strong>';
+      html += '<span class="badge badge-blue">' + l.accent + '</span>';
+      html += '</div>';
+      html += '<div style="display:flex; gap:10px;">';
+      html += '<button class="btn" onclick="speak(\\'' + l.fullTranscript.replace(/'/g, "\\\\'") + '\\', \\'' + l.accent + '\\')">▶ Play Natural Audio</button>';
+      html += '<button class="btn btn-secondary" onclick="window.speechSynthesis.cancel()">⏹ Stop Audio</button>';
+      html += '</div>';
+      html += '</div>';
+
+      html += '<div class="card">';
+      html += '<h2>STAGE 2: WORD HUNT</h2>';
+      html += '<p style="color:var(--text-muted); margin:8px 0 16px;">Which words did you hear? Tap the words below:</p>';
+      html += '<div style="display:flex; flex-wrap:wrap; gap:8px;">';
+      l.options.forEach(opt => {
+        const isSel = selectedHunt.includes(opt.word);
+        let cls = 'word-btn' + (isSel ? ' selected' : '');
+        if (huntSubmitted) {
+          if (opt.isTarget && isSel) cls += ' correct';
+          else if (opt.isTarget && !isSel) cls += ' missed';
+        }
+        html += '<button class="' + cls + '" onclick="toggleHunt(\\'' + opt.word + '\\')">' + opt.word + '</button>';
+      });
+      html += '</div>';
+
+      if (!huntSubmitted) {
+        html += '<div style="margin-top:20px;"><button class="btn" onclick="submitHunt()">Submit Word Hunt</button></div>';
+      } else {
+        html += '<div style="margin-top:16px; padding:12px; background:#ecfdf5; border-radius:10px; color:#065f46;"><strong>✓ Updated in My Words:</strong> Any missed target words have been stored for audio repetition.</div>';
+      }
+      html += '</div>';
+
+      root.innerHTML = html;
+    }
+
+    function toggleHunt(w) {
+      if (huntSubmitted) return;
+      if (selectedHunt.includes(w)) selectedHunt = selectedHunt.filter(x => x !== w);
+      else selectedHunt.push(w);
+      render();
+    }
+
+    function submitHunt() {
+      huntSubmitted = true;
+      currentLesson.targetWords.forEach(tw => {
+        const v = VOCAB.find(x => x.word.toLowerCase() === tw.toLowerCase());
+        if (v) {
+          if (selectedHunt.includes(tw)) {
+            v.stats.listeningRecognised = true;
+          } else {
+            v.stats.listeningRecognised = false;
+            v.stats.timesMissedListening++;
+          }
+        }
+      });
+      render();
+    }
+
+    function renderVocab(root) {
+      let html = '<h1 style="margin-bottom:8px;">Vocabulary Knowledge Base</h1>';
+      html += '<div class="grid">';
+      VOCAB.forEach(v => {
+        html += '<div class="card">';
+        html += '<div style="display:flex; justify-content:space-between; align-items:center;"><h3>' + v.word + '</h3><span class="badge badge-blue">' + v.cefr + '</span></div>';
+        html += '<p style="color:var(--text-muted); font-size:0.85rem; margin:6px 0;">' + v.definition + '</p>';
+        html += '<button class="btn btn-secondary" onclick="speak(\\'' + v.word + '\\')">🔊 Pronounce</button>';
+        html += '</div>';
+      });
+      html += '</div>';
+      root.innerHTML = html;
+    }
+
+    function renderMyWords(root) {
+      const missed = VOCAB.filter(v => !v.stats.listeningRecognised);
+      let html = '<h1 style="margin-bottom:8px;">My Words: Auditory Tracking</h1>';
+      html += '<div class="card" style="background:#fffbeb; border-color:#fcd34d;">';
+      html += '<h3 style="color:#b45309;">WORDS I KEEP MISSING IN LISTENING (' + missed.length + ')</h3>';
+      html += '<p style="color:#92400e; font-size:0.85rem; margin:6px 0 12px;">You know the meaning of these words, but missed them when spoken:</p>';
+      html += '<div style="display:flex; gap:8px; flex-wrap:wrap;">';
+      missed.forEach(m => {
+        html += '<span class="badge badge-amber" style="font-size:0.9rem; padding:6px 12px;">' + m.word + ' (Missed ' + m.stats.timesMissedListening + 'x)</span>';
+      });
+      html += '</div>';
+      html += '</div>';
+      root.innerHTML = html;
+    }
+
+    render();
+  </script>
+</body>
+</html>
